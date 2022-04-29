@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Amiguetes</title>
+	<script>
+		
+	function cargarLibros() {
+            var xhr=new XMLHttpRequest();
+            //readyState
+            //status
+            //responseText
+            xhr.onreadystatechange=function()
+                {
+                    if(xhr.readyState==4 && xhr.status==200)
+                    {
+                        //Ya tengo los datos
+                        var obj_xml=xhr.responseXML;
+                        tratarXML(obj_xml);
+
+                    }   
+
+                }
+            xhr.open("GET", "amigos.xml");
+            xhr.send();
+        }
+
+      function tratarXML(xml) {
+      	var nombres = xml.getElementsByTagName("nombre");
+      	var telefono = xml.getElementsByTagName("telefono");
+      	const amigos = [];
+        for (i=0; i<nombres.length; i++){
+      		var obj_nombre = nombres[i].childNodes[0].nodeValue;
+      		var obj_telefono = telefono[i].childNodes[0].nodeValue;
+      		console.log("Nombre: " +obj_nombre+ " Telefono: " + obj_telefono);
+            amigos[i] = new Object();
+            amigos[i].nombres=obj_nombre;
+            amigos[i].telefono=obj_telefono;
+      	}
+        crearTabla(amigos)
+      }
+
+      function crearTabla(lista_obj) {
+        var tabla = document.createElement("table");
+        tabla.style.borde="1px solid";
+        for (i=0; i<lista_obj.length; i++){
+            var fila = document.createElement("tr");
+            var celda_nombre = document.createElement("td");
+            var celda_telefono = document.createElement("td");
+            celda_nombre.innerHTML=lista_obj[i].nombres;
+            celda_telefono.innerHTML=lista_obj[i].telefono;
+            fila.appendChild(celda_nombre);
+            fila.appendChild(celda_telefono);
+            tabla.appendChild(fila);
+                    }
+         document.getElementById("contenedor_amigos").appendChild(tabla);
+      }
+
+
+
+
+
+	</script>
+</head>
+<body onload="cargarLibros();">
+    <div id="contenedor_amigos"></div>
+
+
+</body>
+</html>

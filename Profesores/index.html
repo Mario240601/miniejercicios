@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Profesores</title>
+
+	<script>
+		function cargarProfes() {
+            var xhr=new XMLHttpRequest();
+            //readyState
+            //status
+            //responseText
+            xhr.onreadystatechange=function()
+                {
+                    if(xhr.readyState==4 && xhr.status==200)
+                    {
+                        //Ya tengo los datos
+                        var obj_xml=xhr.responseXML;
+                        tratarXML(obj_xml);
+
+                    }   
+
+                }
+            xhr.open("GET", "profesores.xml");
+            xhr.send();
+        }
+        function tratarXML(xml) {
+        	var nombres = xml.getElementsByTagName("nombre");
+        	var asignaturas = xml.getElementsByTagName("asignatura");
+            const profesores = [];
+        	for (i=0; i<nombres.length; i++){
+        		var obj_nombre =nombres[i].childNodes[0].nodeValue;
+        		var obj_asignatura  = asignaturas[i].childNodes[0].nodeValue;
+        		console.log("Nombre: " + obj_nombre + " Asignatura: " + obj_asignatura);
+                profesores[i]=new Object();
+                profesores[i].nombres=obj_nombre;
+                profesores[i].asignaturas=obj_asignatura;
+        	}
+            crearLista(profesores);
+        }
+
+        function crearLista(lista_profes) {
+            var lista = document.createElement("ul");
+          
+            for (i=0; i<lista_profes.length; i++){
+                var obj_lista_asignaturas = document.createElement("li");
+                obj_lista_asignaturas.innerHTML=lista_profes[i].asignaturas;
+                lista.appendChild(obj_lista_asignaturas);
+                var parrafo = document.createElement("p");
+                parrafo.innerHTML=lista_profes[i].nombres;
+
+            } 
+            document.getElementById("contenedor_lista").appendChild(parrafo);
+            document.getElementById("contenedor_lista").appendChild(lista);
+
+        }
+
+	</script>
+</head>
+<body onload="cargarProfes();">
+<div id="contenedor_lista"></div>
+</body>
+</html>

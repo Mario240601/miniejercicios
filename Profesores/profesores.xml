@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profesores>
+	<profesor>
+		<nombre>Avelina</nombre>
+		<asignatura>Redes</asignatura>
+	</profesor>
+	<profesor>
+		<nombre>Fernando.h</nombre>
+		<asignatura>ISO</asignatura>
+	</profesor>
+	<profesor>
+		<nombre>Carolina</nombre>
+		<asignatura>BBDD</asignatura>
+		<asignatura>Redes</asignatura>
+	</profesor>
+
+</profesores>
